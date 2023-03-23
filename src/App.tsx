@@ -24,7 +24,7 @@ const HYPERBITCOINIZATION_ADDRESS = '0x99Ce4AA0dF3A96eCec203cf4F36BAc0A54122eAf'
 const WBTC_ADDRESS = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
 const USDC_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 
-const Timer = (endTimestamp: number) => {
+const useCountdownTimer = (endTimestamp: number) => {
   const [currentTimestamp, setCurrentTimestamp] = useState(new Date().getTime());
   const [days, setDays] = useState('00');
   const [hours, setHours] = useState('00');
@@ -56,11 +56,12 @@ const Timer = (endTimestamp: number) => {
     };
   }, []);
 
-  return (
-    <h2 className="text-3xl font-bold text-center mt-2 text-dark-gray-2">
-      {endTimestamp ? `${days}:${hours}:${minutes}:${seconds}` : ''}
-    </h2>
-  );
+  return {
+    days,
+    hours,
+    minutes,
+    seconds
+  }
 };
 
 function BitcoinWarning() {
@@ -305,44 +306,52 @@ function App() {
   const endTimestamp = useMemo(() => {
     return endTimestampFromContract ? (endTimestampFromContract.toNumber() * 1000) : 0;
   }, [endTimestampFromContract]);
+
+  const {
+    days,
+    hours,
+    minutes,
+    seconds
+  } = useCountdownTimer(endTimestamp)
+
   return (
-    <>
-      <div className="container mx-auto my-4" style={{maxWidth: '1200px'}}>
-        <div className="text-center my-8 px-4">
-          <h2 className="text-large font-semibold mb-4">As some of you may know, <a
-            className="underline text-blue-600"
-            href="https://balajis.com/about/"
-            target="_blank"
-            rel="noreferrer"
-          >Balaji</a> made a <a
-            className="underline text-blue-600"
-            href="https://twitter.com/balajis/status/1636797265317867520"
-            target="_blank"
-            rel="noreferrer"
-          >crazy sounding
-            prediction</a> that
-          </h2>
-          <h1 className="text-4xl font-bold mb-4">We're heading for hyperinflation and Bitcoin will reach $1M in</h1>
-          {Timer(endTimestamp)}
-          <h2 className="text-base font-semibold my-4">Whether you agree with him or not, if you're willing to put your
-            money
-            where your mouth is and bet on it, we got you.</h2>
-        </div>
-        <div className={'flex justify-around flex-wrap'}>
-          <BetBox/>
-          <blockquote className="twitter-tweet">
-            <p lang="en" dir="ltr">
-              The three scariest words in the English language:
-              <br/>
-              <br/>
-              “Balaji was right.” <a href="https://t.co/hW3hAvKm4C">https://t.co/hW3hAvKm4C</a>
-            </p>
-            &mdash; Ryan Selkis 🥷 (@twobitidiot){' '}
-            <a href="https://twitter.com/twobitidiot/status/1636875413610803201?ref_src=twsrc%5Etfw">March 17, 2023</a>
-          </blockquote>
-        </div>
+    <div className="container mx-auto my-4" style={{maxWidth: '1200px'}}>
+      <div className="text-center my-8 px-4">
+        <h2 className="text-large font-semibold mb-4">As some of you may know, <a
+          className="underline text-blue-600"
+          href="https://balajis.com/about/"
+          target="_blank"
+          rel="noreferrer"
+        >Balaji</a> made a <a
+          className="underline text-blue-600"
+          href="https://twitter.com/balajis/status/1636797265317867520"
+          target="_blank"
+          rel="noreferrer"
+        >crazy sounding
+          prediction</a> that
+        </h2>
+        <h1 className="text-4xl font-bold mb-4">We're heading for hyperinflation and Bitcoin will reach $1M in</h1>
+        <h2 className="text-3xl font-bold text-center mt-2 text-dark-gray-2">
+          {endTimestamp ? `${days}:${hours}:${minutes}:${seconds}` : ''}
+        </h2>
+        <h2 className="text-base font-semibold my-4">Whether you agree with him or not, if you're willing to put your
+          money
+          where your mouth is and bet on it, we got you.</h2>
       </div>
-    </>
+      <div className={'flex justify-around flex-wrap'}>
+        <BetBox/>
+        <blockquote className="twitter-tweet">
+          <p lang="en" dir="ltr">
+            The three scariest words in the English language:
+            <br/>
+            <br/>
+            “Balaji was right.” <a href="https://t.co/hW3hAvKm4C">https://t.co/hW3hAvKm4C</a>
+          </p>
+          &mdash; Ryan Selkis 🥷 (@twobitidiot){' '}
+          <a href="https://twitter.com/twobitidiot/status/1636875413610803201?ref_src=twsrc%5Etfw">March 17, 2023</a>
+        </blockquote>
+      </div>
+    </div>
   );
 }
 
