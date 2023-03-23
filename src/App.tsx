@@ -104,11 +104,11 @@ function Description(betSide: BetSides | null, betAmount: string | null) {
 }
 
 function BetBox() {
-  const {data: totalUSDC, isLoading: loadingTotalUSDC} = useHyperbitcoinizationRead({
+  const {data: totalUSDC} = useHyperbitcoinizationRead({
     address: HYPERBITCOINIZATION_ADDRESS,
     functionName: 'usdcTotalDeposits',
   });
-  const {data: totalWBTC, isLoading: loadingTotalWBTC} = useHyperbitcoinizationRead({
+  const {data: totalWBTC} = useHyperbitcoinizationRead({
     address: HYPERBITCOINIZATION_ADDRESS,
     functionName: 'btcTotalDeposits',
   });
@@ -261,11 +261,11 @@ function BetBox() {
               )
             }
           </div>
-          <div className="mt-4">
-            <div className="ml-4 text-gray-600 text-xs">
+          <div className="mt-3">
+            <div className="text-center font-xl font-semibold text-gray-600">
               Total Deposited USDC: {totalUSDC ? String(totalUSDC) : '...'}
             </div>
-            <div className="ml-4 text-gray-600 text-xs">
+            <div className="text-center font-xl font-semibold text-gray-600">
               Total Deposited WBTC: {totalWBTC ? String(totalWBTC) : '...'}
             </div>
           </div>
