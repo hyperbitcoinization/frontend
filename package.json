@@ -1,6 +1,7 @@
 {
   "name": "hyperbitcoinization",
   "version": "1.0.0",
+  "license": "unlicense",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
