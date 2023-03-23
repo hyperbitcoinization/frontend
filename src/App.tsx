@@ -68,7 +68,7 @@ function BitcoinWarning() {
     <div className="bg-yellow-200 text-yellow-800 p-4 rounded mb-4">
       <p className="font-bold mb-2">Notice:</p>
       <p className="text-sm">
-        If you believe in Bitcoin and want to save your money or make profit, just buy Bitcoin. This bet is not for
+        If you believe in Bitcoin and want to save your money or make some profit, just buy Bitcoin. This bet is not for
         profit and it is just for a social impact.
       </p>
     </div>
@@ -197,7 +197,8 @@ function BetBox() {
             </div>
           )}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Choose your side:</label>
+            <label className="block text-gray-700 font-bold mb-2">Do you think Balaji's prediction will come
+              true?</label>
             <div className="flex">
               <button
                 className={`w-1/2 mr-2 px-4 py-2 text-sm font-bold rounded border ${
@@ -207,7 +208,7 @@ function BetBox() {
                 }`}
                 onClick={() => setBetSide(BetSides.WBTC)}
               >
-                bet on Bitcoin
+                Yes
               </button>
               <button
                 className={`w-1/2 ml-2 px-4 py-2 text-sm font-bold rounded border ${
@@ -217,7 +218,7 @@ function BetBox() {
                 }`}
                 onClick={() => setBetSide(BetSides.USDC)}
               >
-                bet on USDC
+                No
               </button>
             </div>
           </div>
@@ -262,10 +263,10 @@ function BetBox() {
           </div>
           <div className="mt-4">
             <div className="ml-4 text-gray-600 text-xs">
-              Total Deposited USDC: {loadingTotalUSDC ? '...' : String(totalUSDC)}
+              Total Deposited USDC: {totalUSDC ? String(totalUSDC) : '...'}
             </div>
             <div className="ml-4 text-gray-600 text-xs">
-              Total Deposited WBTC: {loadingTotalWBTC ? '...' : String(totalWBTC)}
+              Total Deposited WBTC: {totalWBTC ? String(totalWBTC) : '...'}
             </div>
           </div>
         </div>
@@ -285,17 +286,25 @@ function App() {
   return (
     <>
       <div className="container mx-auto my-4" style={{maxWidth: '1200px'}}>
-        <div className="text-center my-8">
-          <h1 className="text-4xl font-bold mb-1">Will Bitcoin reach $1M in 90 days?</h1>
-          <a
+        <div className="text-center my-8 px-4">
+          <h2 className="text-large font-semibold mb-4">As some of you may know, <a
+            className="underline text-blue-600"
+            href="https://balajis.com/about/"
+            target="_blank"
+            rel="noreferrer"
+          >Balaji</a> made a <a
             className="underline text-blue-600"
             href="https://twitter.com/balajis/status/1636797265317867520"
             target="_blank"
             rel="noreferrer"
-          >
-            as Balaji said
-          </a>
+          >crazy sounding
+            prediction</a> that
+          </h2>
+          <h1 className="text-4xl font-bold mb-4">We're heading for hyperinflation and Bitcoin will reach $1M in</h1>
           {Timer(endTimestamp)}
+          <h2 className="text-base font-semibold my-4">Whether you agree with him or not, if you're willing to put your
+            money
+            where your mouth is and bet on it, we got you.</h2>
         </div>
         <div className={'flex justify-around flex-wrap'}>
           <BetBox/>
