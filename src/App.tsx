@@ -24,14 +24,14 @@ const HYPERBITCOINIZATION_ADDRESS = '0x99Ce4AA0dF3A96eCec203cf4F36BAc0A54122eAf'
 const WBTC_ADDRESS = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
 const USDC_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 
-const Timer = (endTime: Date) => {
-  const [now, setNow] = useState(new Date());
+const Timer = (endTimestamp: number) => {
+  const [currentTimestamp, setCurrentTimestamp] = useState(new Date().getTime());
   const [days, setDays] = useState('00');
   const [hours, setHours] = useState('00');
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
   useEffect(() => {
-    const diff = endTime.getTime() - now.getTime();
+    const diff = endTimestamp - currentTimestamp;
     if (diff < 0) {
       setSeconds('00');
       setMinutes('00');
@@ -47,10 +47,10 @@ const Timer = (endTime: Date) => {
     setMinutes(minutes < 10 ? `0${minutes}` : minutes.toString());
     setHours(hours < 10 ? `0${hours}` : hours.toString());
     setDays(days < 10 ? `0${days}` : days.toString());
-  }, [endTime, now]);
+  }, [endTimestamp, currentTimestamp]);
 
   useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 1000);
+    const interval = setInterval(() => setCurrentTimestamp((prev) => prev + 1000), 1000);
     return () => {
       clearInterval(interval);
     };
@@ -58,7 +58,7 @@ const Timer = (endTime: Date) => {
 
   return (
     <h2 className="text-3xl font-bold text-center mt-2 text-dark-gray-2">
-      {days}:{hours}:{minutes}:{seconds}
+      {endTimestamp ? `${days}:${hours}:${minutes}:${seconds}` : ''}
     </h2>
   );
 };
@@ -275,13 +275,13 @@ function BetBox() {
 }
 
 function App() {
-  const {data: endTimestamp} = useHyperbitcoinizationRead({
+  const {data: endTimestampFromContract} = useHyperbitcoinizationRead({
     address: HYPERBITCOINIZATION_ADDRESS,
     functionName: 'endTimestamp',
   });
-  const betEndDate = useMemo(() => {
-    return endTimestamp ? new Date(endTimestamp.toNumber() * 1000) : undefined;
-  }, [endTimestamp]);
+  const endTimestamp = useMemo(() => {
+    return endTimestampFromContract ? (endTimestampFromContract.toNumber() * 1000) : 0;
+  }, [endTimestampFromContract]);
   return (
     <>
       <div className="container mx-auto my-4" style={{maxWidth: '1200px'}}>
@@ -295,7 +295,7 @@ function App() {
           >
             as Balaji said
           </a>
-          {betEndDate && Timer(betEndDate)}
+          {Timer(endTimestamp)}
         </div>
         <div className={'flex justify-around flex-wrap'}>
           <BetBox/>
