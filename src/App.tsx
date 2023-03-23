@@ -80,25 +80,29 @@ function Description(betSide: BetSides | null, betAmount: string | null) {
   return betSide === BetSides.WBTC ? (
     <div className="bg-green-200 text-green-800 shadow-md rounded p-4 my-4">
       <p className="text-gray-700 text-sm mb-2">
-        If you deposit {betAmount || 'X'} USDC, you will get{' '}
-        {betAmount ? parseFloat(betAmount) / 1000000 : 'X / 1000000'} BTC and {betAmount || 'X'} USDC if the BTC price
-        reaches 1m USDC in 90 days, and you will get nothing otherwise
+        When you deposit {betAmount || 'X'} USDC, you will get{' '}
+        {betAmount ? parseFloat(betAmount) / 1000000 : 'X / 1000000'} BTC and {betAmount || 'X'} USDC if you win and the
+        BTC price
+        reaches 1m USDC before the countdown ends. In case you lose the bet, you get nothing.
       </p>
       <p className="text-gray-700 text-sm">
-        Note: if there {"isn't"} enough amount of WBTC to fill your bet after the bet is settled in the contract, you
-        can withdraw your extra USDC amount.
+        Note: if there {"isn't"} enough amount of WBTC in the contract to fill your bet when the bet is settled, you'll
+        be able to withdraw your
+        extra USDC amount regardless of the bet's result
       </p>
     </div>
   ) : (
     <div className="bg-green-200 text-green-800 shadow-md rounded p-4 my-4">
       <p className="text-gray-700 text-sm mb-2">
-        If you deposit {betAmount || 'X'} WBTC, you will get{' '}
-        {betAmount ? parseFloat(betAmount) * 1000000 : 'X * 1000000'} USDC and {betAmount || 'X'} WBTC if the BTC price
-        does not reach 1m USDC in 90 days, and you will get nothing otherwise
+        When you deposit {betAmount || 'X'} WBTC, you will get{' '}
+        {betAmount ? parseFloat(betAmount) * 1000000 : 'X * 1000000'} USDC and {betAmount || 'X'} WBTC if you win and
+        the BTC price
+        does not reach 1m USDC before the countdown ends. In case you lose the bet, you get nothing.
       </p>
       <p className="text-gray-700 text-sm">
-        Note: if there {"isn't"} enough amount of USDC to fill your bet after the bet is settled in the contract, you
-        can withdraw your extra WBTC amount.
+        Note: if there {"isn't"} enough amount of USDC in the contract to fill your bet when the bet is settled, you'll
+        be able to withdraw your
+        extra WBTC amount regardless of the bet's result
       </p>
     </div>
   );
@@ -315,44 +319,58 @@ function App() {
   } = useCountdownTimer(endTimestamp)
 
   return (
-    <div className="container mx-auto my-4" style={{maxWidth: '1200px'}}>
+    <div className="container mx-auto my-4 max-w-screen-xl">
       <div className="text-center my-8 px-4">
-        <h2 className="text-large font-semibold mb-4">As some of you may know, <a
-          className="underline text-blue-600"
-          href="https://balajis.com/about/"
-          target="_blank"
-          rel="noreferrer"
-        >Balaji</a> made a <a
-          className="underline text-blue-600"
-          href="https://twitter.com/balajis/status/1636797265317867520"
-          target="_blank"
-          rel="noreferrer"
-        >crazy sounding
-          prediction</a> that
+        <h2 className="text-xl font-semibold mb-4 leading-7">
+          As some of you may know,{' '}
+          <a
+            className="underline text-blue-600 hover:text-blue-800"
+            href="https://balajis.com/about/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Balaji
+          </a>{' '}
+          made a{' '}
+          <a
+            className="underline text-blue-600 hover:text-blue-800"
+            href="https://twitter.com/balajis/status/1636797265317867520"
+            target="_blank"
+            rel="noreferrer"
+          >
+            crazy sounding prediction
+          </a>{' '}
+          that
         </h2>
-        <h1 className="text-4xl font-bold mb-4">We're heading for hyperinflation and Bitcoin will reach $1M in</h1>
-        <h2 className="text-3xl font-bold text-center mt-2 text-dark-gray-2">
-          {endTimestamp ? `${days}:${hours}:${minutes}:${seconds}` : ''}
+        <h1 className="text-4xl font-bold mb-4 text-gray-800">
+          We're heading for hyperinflation and Bitcoin will reach $1M in
+        </h1>
+        <h2 className="text-3xl font-bold text-center mt-2 text-gray-800">
+          {endTimestamp ? `${days}d ${hours}h ${minutes}m ${seconds}s` : ''}
         </h2>
-        <h2 className="text-base font-semibold my-4">Whether you agree with him or not, if you're willing to put your
-          money
-          where your mouth is and bet on it, we got you.</h2>
+        <h2 className="text-base font-semibold my-4">
+          Whether you agree with him or not, if you're willing to bet on it, we got you.
+        </h2>
       </div>
-      <div className={'flex justify-around flex-wrap'}>
+      <div className="flex justify-around flex-wrap">
         <BetBox/>
         <blockquote className="twitter-tweet">
           <p lang="en" dir="ltr">
             The three scariest words in the English language:
             <br/>
             <br/>
-            “Balaji was right.” <a href="https://t.co/hW3hAvKm4C">https://t.co/hW3hAvKm4C</a>
+            “Balaji was right.”{' '}
+            <a href="https://t.co/hW3hAvKm4C">https://t.co/hW3hAvKm4C</a>
           </p>
           &mdash; Ryan Selkis 🥷 (@twobitidiot){' '}
-          <a href="https://twitter.com/twobitidiot/status/1636875413610803201?ref_src=twsrc%5Etfw">March 17, 2023</a>
+          <a href="https://twitter.com/twobitidiot/status/1636875413610803201?ref_src=twsrc%5Etfw">
+            March 17, 2023
+          </a>
         </blockquote>
       </div>
     </div>
-  );
+  )
+    ;
 }
 
 export default App;
