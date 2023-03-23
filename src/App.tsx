@@ -68,8 +68,8 @@ function BitcoinWarning() {
     <div className="bg-yellow-200 text-yellow-800 p-4 rounded mb-4">
       <p className="font-bold mb-2">Notice:</p>
       <p className="text-sm">
-        If you believe in Bitcoin and want to save your money or make some profit, just buy Bitcoin. This bet is not for
-        profit and it is just for a social impact.
+        If you believe in Bitcoin and want to save your money or make some profit, just buy Bitcoin. This is just a bet
+        and our main purpose is to raise awareness and ring the alarm bell.
       </p>
     </div>
   );
